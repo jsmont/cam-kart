@@ -3,9 +3,10 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class SimpleCarController : NetworkBehaviour
 {
-
+    public GameObject CBObject;
     private Vector3 zeroAc;
     private Vector3 curAc;
     private float sensH = 10;
@@ -40,6 +41,11 @@ public class SimpleCarController : NetworkBehaviour
         // This sets where the center of mass is, if you look r_Ridgedbody."centerOfMass" is a function of ridged body.
         r_Ridgedbody = GetComponent<Rigidbody>();
         r_Ridgedbody.centerOfMass = t_CenterOfMass.localPosition;
+
+        if (isLocalPlayer)
+        {
+            CBObject = GameObject.FindWithTag("MainCamera");
+        }
     }
 
     private float GetInput()
@@ -55,6 +61,7 @@ public class SimpleCarController : NetworkBehaviour
             return;
         //Sets the wheel meshs to match the rotation of the physics WheelCollider.
         UpdateMeshPosition();
+        CBObject.transform.position = this.transform.position + new Vector3(0, 2, 0);
     }
 
     public void FixedUpdate()
