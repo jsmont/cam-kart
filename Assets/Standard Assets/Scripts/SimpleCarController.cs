@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SimpleCarController : MonoBehaviour
+public class SimpleCarController : NetworkBehaviour
 {
 
     private Vector3 zeroAc;
@@ -50,12 +51,16 @@ public class SimpleCarController : MonoBehaviour
 
     public void Update()
     {
+        if (!isLocalPlayer)
+            return;
         //Sets the wheel meshs to match the rotation of the physics WheelCollider.
         UpdateMeshPosition();
     }
 
     public void FixedUpdate()
     {
+        if (!isLocalPlayer)
+            return;
         //Turn the wheels to a set max, with an input.
         //float steer = Input.GetAxis("Horizontal") * maxSteerAngle;
         //float steer = 0;
@@ -69,10 +74,12 @@ public class SimpleCarController : MonoBehaviour
         }
         else
         {
-            steer = ((steer / 2) * maxSteerAngle);
+            steer = ((steer / 4) * maxSteerAngle);
+            if (steer > maxSteerAngle)
+            {
+                steer = maxSteerAngle;
+            }
         }
-
-
 
         Debug.Log(backGoing);
 
