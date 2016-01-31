@@ -56,24 +56,24 @@ namespace UnityEngine.Networking
 
 			int xpos = 10 + offsetX;
 			int ypos = 40 + offsetY;
-			int spacing = 24;
+			int spacing = 48;
 
 			if (!NetworkClient.active && !NetworkServer.active && manager.matchMaker == null)
 			{
-				if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Host(H)"))
+				if (GUI.Button(new Rect(xpos, ypos, 200, 40), "LAN Host(H)"))
 				{
 					manager.StartHost();
 				}
 				ypos += spacing;
 
-				if (GUI.Button(new Rect(xpos, ypos, 105, 20), "LAN Client(C)"))
+				if (GUI.Button(new Rect(xpos, ypos, 105, 40), "LAN Client(C)"))
 				{
 					manager.StartClient();
 				}
-				manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 20), manager.networkAddress);
+				manager.networkAddress = GUI.TextField(new Rect(xpos + 100, ypos, 95, 40), manager.networkAddress);
 				ypos += spacing;
 
-				if (GUI.Button(new Rect(xpos, ypos, 200, 20), "LAN Server Only(S)"))
+				if (GUI.Button(new Rect(xpos, ypos, 200, 40), "LAN Server Only(S)"))
 				{
 					manager.StartServer();
 				}
@@ -83,12 +83,12 @@ namespace UnityEngine.Networking
 			{
 				if (NetworkServer.active)
 				{
-					GUI.Label(new Rect(xpos, ypos, 300, 20), "Server: port=" + manager.networkPort);
+					GUI.Label(new Rect(xpos, ypos, 300, 40), "Server: port=" + manager.networkPort);
 					ypos += spacing;
 				}
 				if (NetworkClient.active)
 				{
-					GUI.Label(new Rect(xpos, ypos, 300, 20), "Client: address=" + manager.networkAddress + " port=" + manager.networkPort);
+					GUI.Label(new Rect(xpos, ypos, 300, 40), "Client: address=" + manager.networkAddress + " port=" + manager.networkPort);
 					ypos += spacing;
 				}
 			}
