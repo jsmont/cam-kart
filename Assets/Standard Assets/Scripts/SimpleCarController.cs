@@ -61,7 +61,8 @@ public class SimpleCarController : NetworkBehaviour
             return;
         //Sets the wheel meshs to match the rotation of the physics WheelCollider.
         UpdateMeshPosition();
-        CBObject.transform.position = this.transform.position + new Vector3(0, 2, 0);
+		CBObject.transform.position = this.transform.position + new Vector3(0, 2, 0);
+		CBObject.transform.rotation = this.transform.rotation;
     }
 
     public void FixedUpdate()
