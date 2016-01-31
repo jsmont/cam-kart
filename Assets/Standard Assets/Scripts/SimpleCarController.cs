@@ -4,6 +4,15 @@ using System.Collections.Generic;
 
 public class SimpleCarController : MonoBehaviour
 {
+
+    private Vector3 zeroAc;
+    private Vector3 curAc;
+    private float sensH = 10;
+    private float sensV = 10;
+    private float smooth = 0.5f;
+    private float GetAxisH = 0;
+
+
     //The maximum amount of power put out by each wheel.
     public float maxTorque = 150f;
 
@@ -32,6 +41,13 @@ public class SimpleCarController : MonoBehaviour
         r_Ridgedbody.centerOfMass = t_CenterOfMass.localPosition;
     }
 
+    private float GetInput()
+    {
+        float input = Input.acceleration.x;
+        return input;
+
+    }
+
     public void Update()
     {
         //Sets the wheel meshs to match the rotation of the physics WheelCollider.
@@ -41,13 +57,46 @@ public class SimpleCarController : MonoBehaviour
     public void FixedUpdate()
     {
         //Turn the wheels to a set max, with an input.
-        float steer = Input.GetAxis("Horizontal") * maxSteerAngle;
+        //float steer = Input.GetAxis("Horizontal") * maxSteerAngle;
+        //float steer = 0;
+
+        float steer = Input.acceleration.x;
+
+        float backGoing = System.Math.Abs(Input.acceleration.y);
+        if (System.Math.Abs(steer) < 0.05f)
+        {
+            steer = 0;
+        }
+        else
+        {
+            steer = ((steer / 2) * maxSteerAngle);
+        }
+
+
+
+        Debug.Log(backGoing);
+
+
+        //curAc = Vector3.Lerp(curAc, Input.acceleration - zeroAc, Time.deltaTime / smooth);
+        //GetAxisH = Mathf.Clamp(curAc.x * sensH, -1, 1);
+        //float random = GetAxisH * maxSteerAngle;
+
+
         //Move forward or backwards based on the maxTorque, with an input.
         //float torque = Input.GetAxis("Vertical") * maxTorque;
         float torque = maxTorque;
         if (steer != 0)
         {
             torque = 100;
+        }
+        else
+        {
+            steer = Input.GetAxis("Horizontal") * maxSteerAngle;
+        }
+
+		if (backGoing < 0.4 && backGoing != 0)
+        {
+            torque = torque * -2;
         }
         //Sets which wheels turn, this is the two front wheels.
         wheelCollider[0].steerAngle = steer;
