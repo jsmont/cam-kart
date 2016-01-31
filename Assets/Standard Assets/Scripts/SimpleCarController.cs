@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class SimpleCarController : MonoBehaviour
 {
     //The maximum amount of power put out by each wheel.
-    public float maxTorque = 500f;
+    public float maxTorque = 150f;
 
     //The max distance a wheel can turn.
     public float maxSteerAngle = 45f;
@@ -47,7 +47,7 @@ public class SimpleCarController : MonoBehaviour
         float torque = maxTorque;
         if (steer != 0)
         {
-            torque = 50;
+            torque = 100;
         }
         //Sets which wheels turn, this is the two front wheels.
         wheelCollider[0].steerAngle = steer;
